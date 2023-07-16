@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url(../public/assets/fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+*,
+:root {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+}
+
+button {
+  font: unset;
+}
+
+a {
+  color: var(--textColor);
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--textColor);
+  overflow-x: hidden;
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-size: 1rem;
+
+  --transitionTiming: 300ms ease-in-out;
+  --globalBorderRadius: 5px;
+
+  .page {
+    min-height: calc(100vh - 7.5vh);
+    width: calc(100% - (2 * var(--scrollbar-width)));
+    position: relative;
+    background: var(--accentThree);
+    overflow-x: hidden;
+  }
+}
