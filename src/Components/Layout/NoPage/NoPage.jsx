@@ -4,7 +4,7 @@ import "./style.scss";
 function NoPage() { 
  
    return ( 
-       <div id="NoPage" className="page"></div> 
+       <div id="NoPage" className="page">404</div> 
    ); 
 } 
  

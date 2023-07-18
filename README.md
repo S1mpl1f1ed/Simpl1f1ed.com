@@ -128,4 +128,65 @@ Finally inside of your github project you must add the enviorment secrects
 
 ## Conclusion and Disclaimer
 
-Just so its out there, when I say something like `YOUR_API_KEY`, I mean you should change that to your Firebase API_KEY given to you in the Firebase project config.
+- Just so its out there, when I say something like `YOUR_API_KEY`, I mean you should change that to your Firebase API_KEY given to you in the Firebase project config.
+
+- The `firebase.js` file assumes you have setup your **Firestore Rules** correctly so that it can access the necessary docuemnts follow the example for public and private records.
+
+```
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userID} {
+      allow create: if !exists(/databases/$(database)/documents/users/$(userID));
+      allow read, write: if request.auth != null && request.auth.uid == userID;
+
+    	match /public/{docuement=**} {
+      	allow read;
+        allow write: if request.auth != null && request.auth.uid == get(/databases/$(database)/documents/users/$(userID)/private/privateUserRecords).data.uid;
+        allow create;
+      }
+      
+      match /private/{docuement=**} {
+      	allow read, write: if request.auth != null && request.auth.uid == resource.data.uid;
+        allow create;
+    	}
+    }
+  }
+}
+
+```
+
+- The `firebase.js` file also is limited to `Documents > collection > document > collection > document > field` in the following format example:
+```
++------------------------------+
+|            Users             | <- Collection
++------------------------------+
+|                              |
+| +--------------------------+ |
+| |           User           | |  <- Document
+| +--------------------------+ |
+| |                          | |
+| | +---------------------+  | |
+| | |       Public        |  | |  <- Collection
+| | +---------------------+  | |
+| | | +-----------------+ |  | |
+| | | |publicUserRecords| |  | |  <- Document
+| | | +-----------------+ |  | |
+| | | |     Username    | |  | |  <- Field
+| | | | Profile Picture | |  | |  <- Field
+| | | +-----------------+ |  | |
+| | +---------------------+  | |
+| |                          | |
+| | +----------------------+ | |
+| | |       Private        | | |  <- Collection
+| | +----------------------+ | |
+| | | +------------------+ | | |
+| | | |privateUserRecords| | | |  <- Document
+| | | +------------------+ | | |
+| | | |       Email      | | | |  <- Field
+| | | |        IP        | | | |  <- Field
+| | | |      Birthday    | | | |  <- Field
+| | | +------------------+ | | |
+| | +----------------------+ | |
+| +--------------------------+ |
++------------------------------+
+```
