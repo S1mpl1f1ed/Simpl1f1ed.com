@@ -7,9 +7,6 @@ This guide will walk you through the process of setting up and deploying a Fireb
 Before you begin, make sure you have the following:
 
 - [Node.js](https://nodejs.org/en) is installed on your machine.
-- Firebase CLI installed globally. If not, you can install it using the following command:
-
-```npm install -g firebase-tools```
 
 ## Step 1: Clone the GitHub Repository
 
@@ -20,14 +17,15 @@ Before you begin, make sure you have the following:
 
 ## Step 2: Set up a Firebase Project
 
-1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
-2. Click on "Add app" and select "Web" to add a new web app to your project.
+1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project name it and add it to your Google account.
+2. When it is done provisioning resources, select the `</>` symbol to create a web app.
 3. Follow the instructions to register your app and obtain your Firebase configuration object.
+4. Ensure you get the Firebase configuration, if you dont you can get it from the `Project settings` page at the bottom in the `Your apps` section.
 
 ## Step 3: Configure Firebase in your React App
 
 1. Create a file in the main project directory named ```.env.local```. This will prevent sensative project information from being uploaded to github.
-2. Paste each token of the firebase configuration using the following format
+2. Paste each token of the Firebase configuration using the following format
 
 ```
 REACT_APP_FIREBASE_API_KEY = YOUR_API_KEY
@@ -75,6 +73,22 @@ REACT_APP_FIREBASE_MEASURE_ID = YOUR_MEASURE_ID
     "singleProjectMode": true
   }
 }
+```
+
+In the event that you are adding another web app to a project that already has one, you will ne to specifiy the webapp name in the above code. It should look something like this:
+
+```
+"hosting": {
+    "site": "YOUR_SITE_NAME",
+    "public": "build",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
 ```
 
 ## Step 5: Deploy to Firebase
