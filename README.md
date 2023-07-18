@@ -9,14 +9,14 @@ Before you begin, make sure you have the following:
 - [Node.js](https://nodejs.org/en) is installed on your machine.
 - Firebase CLI installed globally. If not, you can install it using the following command:
 
-`npm install -g firebase-tools`
+```npm install -g firebase-tools```
 
 ## Step 1: Clone the GitHub Repository
 
 1. Open your terminal and navigate to the desired directory where you want to clone the repository.
 2. Run the following command to clone the GitHub repository:
 
-`git clone https://github.com/MScheiterle/ReactFirebaseTemplate.git`
+```git clone https://github.com/MScheiterle/ReactFirebaseTemplate.git```
 
 ## Step 2: Set up a Firebase Project
 
@@ -26,7 +26,7 @@ Before you begin, make sure you have the following:
 
 ## Step 3: Configure Firebase in your React App
 
-1. Create a file in the main project directory named `.env.local`. This will prevent sensative project information from being uploaded to github.
+1. Create a file in the main project directory named ```.env.local```. This will prevent sensative project information from being uploaded to github.
 2. Paste each token of the firebase configuration using the following format
 
 ```
@@ -43,7 +43,7 @@ REACT_APP_FIREBASE_MEASURE_ID = YOUR_MEASURE_ID
 
 1. Initialize your Firebase project by running the following command:
 
-`firebase init`
+```firebase init```
 
 - Select the Firebase features you want to set up.
 - Choose your Firebase project from the list.
@@ -85,7 +85,7 @@ Use one of the below options to deploy the React App to your Firebase project
 
 Although I prefer to use the Github option I added this one for all those who dont prefer Github, I am **NOT** certain if `.env.local` enviorment varibles will be transfered to the Firebase machine so if your `firebase.ts` file isnt working or you get an error in console saying it doesnt have an API_KEY that may be why.
 
-`npm run deploy`
+```npm run deploy```
 
 - Push to Github
 
@@ -112,19 +112,19 @@ Finally inside of your github project you must add the enviorment secrects
 
 3. Now add the following to the `Repository Secrets` using the bright green `New repository secret` button in the top right, make sure to **NOT** add them to `Environment secrets`
 
-- name: `REACT_APP_FIREBASE_API_KEY` secret: `YOUR_API_KEY`
+- name: ```REACT_APP_FIREBASE_API_KEY``` secret: `YOUR_API_KEY`
 
-- name: `REACT_APP_FIREBASE_AUTH_DOMAIN` secret: `YOUR_AUTH_DOMAIN`
+- name: ```REACT_APP_FIREBASE_AUTH_DOMAIN``` secret: `YOUR_AUTH_DOMAIN`
 
-- name: `REACT_APP_FIREBASE_PROJECT_ID` secret: `YOUR_PROJECT_ID`
+- name: ```REACT_APP_FIREBASE_PROJECT_ID``` secret: `YOUR_PROJECT_ID`
 
-- name: `REACT_APP_FIREBASE_STORAGE_BUCKET` secret: `YOUR_STORAGE_BUCKET`
+- name: ```REACT_APP_FIREBASE_STORAGE_BUCKET``` secret: `YOUR_STORAGE_BUCKET`
 
-- name: `REACT_APP_FIREBASE_MESSAGING_SENDER_ID` secret:  `YOUR_MESSAGING_SENDER_ID`
+- name: ```REACT_APP_FIREBASE_MESSAGING_SENDER_ID``` secret:  `YOUR_MESSAGING_SENDER_ID`
 
-- name: `REACT_APP_FIREBASE_APP_ID` secret: `YOUR_APP_ID`
+- name: ```REACT_APP_FIREBASE_APP_ID``` secret: `YOUR_APP_ID`
 
-- name: `REACT_APP_FIREBASE_MEASURE_ID` secret: `YOUR_MEASURE_ID`
+- name: ```REACT_APP_FIREBASE_MEASURE_ID``` secret: `YOUR_MEASURE_ID`
 
 ## Conclusion and Disclaimer
 
