@@ -1,6 +1,6 @@
 {
   "name": "reactfirebasetemplate_by_simpl1f1ed",
-  "version": "v2",
+  "version": "v3",
   "private": true,
   "dependencies": {
     "axios": "^1.4.0",
@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/react": "^18.2.15"
   }
 }

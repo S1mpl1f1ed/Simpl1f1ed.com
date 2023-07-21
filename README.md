@@ -39,7 +39,7 @@ REACT_APP_FIREBASE_MEASURE_ID = YOUR_MEASURE_ID
 
 ## Step 4: Customize your React App
 
-1. Initialize your Firebase project by running the following command:
+1. Initialize your Firebase project by running the following command in the project directory:
 
 ```firebase init```
 
@@ -49,7 +49,7 @@ REACT_APP_FIREBASE_MEASURE_ID = YOUR_MEASURE_ID
 - Configure as a single-page if you only want one page.
 - Overwrite index.html: No.
 
-2. Replace all code within the `firebase.js` file with the following code:
+2. Replace all code within the `firebase.json` file with the following code if its not already done:
 
 ```
 {
@@ -144,7 +144,7 @@ Finally inside of your github project you must add the enviorment secrects
 
 - Just so its out there, when I say something like `YOUR_API_KEY`, I mean you should change that to your Firebase API_KEY given to you in the Firebase project config.
 
-- The `firebase.js` file assumes you have setup your **Firestore Rules** correctly so that it can access the necessary docuemnts follow the example for public and private records.
+- The `firebase.json` file assumes you have setup your **Firestore Rules** correctly so that it can access the necessary docuemnts follow the example for public and private records.
 
 ```
 service cloud.firestore {
@@ -169,10 +169,10 @@ service cloud.firestore {
 
 ```
 
-- The `firebase.js` file also is limited to `Documents > collection > document > collection > document > field` in the following format example:
+- The `firebase.ts` file also is limited to `Documents > collection > document > collection > document > field` in the following format example:
 ```
 +------------------------------+
-|            Users             | <- Collection
+|            Users             |  <- Collection
 +------------------------------+
 |                              |
 | +--------------------------+ |
@@ -200,7 +200,20 @@ service cloud.firestore {
 | | | |        IP        | | | |  <- Field
 | | | |      Birthday    | | | |  <- Field
 | | | +------------------+ | | |
+| |                          | |
+| | +----------------------+ | |
+| | |       Spotify        | | |  <- Collection
+| | +----------------------+ | |
+| | | +------------------+ | | |
+| | | |spotifyUserRecords| | | |  <- Document
+| | | +------------------+ | | |
+| | | |      token       | | | |  <- Field
+| | | |  refresh_token   | | | |  <- Field
+| | | |    expiration    | | | |  <- Field
+| | | +------------------+ | | |
 | | +----------------------+ | |
 | +--------------------------+ |
 +------------------------------+
 ```
+
+- Any questions can be directed to Simpl1f1ed on discord or to the issues area in Github.

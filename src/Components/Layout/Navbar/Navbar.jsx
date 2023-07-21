@@ -4,7 +4,7 @@ import "./style.scss";
 function Navbar() { 
  
    return ( 
-       <div id="Navbar" className=""></div> 
+       <div id="Navbar" className="">Navbar</div> 
    ); 
 } 
  

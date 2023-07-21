@@ -50,18 +50,20 @@ const signInWithGoogle = async (): Promise<void> => {
     const userDocRef = doc(db, "users", user.uid);
     const privateDocRef = doc(userDocRef, "private", "privateUserRecords");
     const publicDocRef = doc(userDocRef, "public", "publicUserRecords");
-    const spotifyDocRef = doc(userDocRef, "spotify", "spotifyUserRecords");
 
     // Set user data in Firestore
-    await setDoc(privateDocRef, {
-      uid: user.uid,
-      name: user.displayName,
-      authProvider: "google",
-      email: user.email,
-      connectionIP: connection.data.ip,
-    }, { merge: true });
+    await setDoc(
+      privateDocRef,
+      {
+        uid: user.uid,
+        name: user.displayName,
+        authProvider: "google",
+        email: user.email,
+        connectionIP: connection.data.ip,
+      },
+      { merge: true }
+    );
     await setDoc(publicDocRef, {}, { merge: true });
-    await setDoc(spotifyDocRef, {}, { merge: true });
   } catch (err) {
     console.error(err);
   }
@@ -77,11 +79,9 @@ const logInWithEmailAndPassword = async (
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    errorMessageField.innerHTML = "Error: Email and Passowrd don't match...";
+    errorMessageField.innerHTML = "Error: Email and Password don't match...";
     Array.from(fields).forEach((value) => {
-      if (value.parentElement) {
-        value.parentElement.classList.add("errored");
-      }
+      value.classList.toggle("errored", !value.classList.contains("errored"));
     });
   }
 };
@@ -101,7 +101,6 @@ const registerWithEmailAndPassword = async (
     const userRef = doc(db, "users", user.uid);
     const privateDocRef = doc(userRef, "private", "privateUserRecords");
     const publicDocRef = doc(userRef, "public", "publicUserRecords");
-    const spotifyDocRef = doc(userRef, "spotify", "spotifyUserRecords");
 
     // Set user data in Firestore
     await setDoc(privateDocRef, {
@@ -112,18 +111,29 @@ const registerWithEmailAndPassword = async (
       connectionIP: connection.data.ip,
     });
     await setDoc(publicDocRef, {});
-    await setDoc(spotifyDocRef, {});
   } catch (err) {
     if (err.message.includes("email-already-in-use")) {
       errorMessageField.innerHTML = "Error: Email already in use...";
+
+      Array.from(fields).forEach((parentElement) => {
+        const childNodes = parentElement.childNodes;
+
+        for (const node of childNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const element = node as HTMLElement;
+            if (element.id === "email") {
+              parentElement.classList.toggle(
+                "errored",
+                !parentElement.classList.contains("errored")
+              );
+              break;
+            }
+          }
+        }
+      });
     } else {
       errorMessageField.innerHTML = "Error: Report this to Simpl1f1ed";
     }
-    Array.from(fields).forEach((value) => {
-      if (value.parentElement) {
-        value.parentElement.classList.add("errored");
-      }
-    });
   }
 };
 

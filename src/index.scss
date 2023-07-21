@@ -19,6 +19,7 @@ a {
 }
 
 body {
+  padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,11 +32,14 @@ body {
   --transitionTiming: 300ms ease-in-out;
   --globalBorderRadius: 5px;
 
+  .nth {
+    color: white;
+    background: black;
+  }
+
   .page {
     min-height: calc(100vh - 7.5vh);
-    width: calc(100% - (2 * var(--scrollbar-width)));
     position: relative;
-    background: var(--accentThree);
     overflow-x: hidden;
   }
 }
