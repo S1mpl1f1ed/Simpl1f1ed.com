@@ -17,6 +17,7 @@ import {
   doc,
   getDoc,
   setDoc,
+  DocumentReference,
 } from "firebase/firestore";
 import axios from "axios";
 
@@ -165,93 +166,13 @@ const logout = (): void => {
   signOut(auth);
 };
 
-// Function to add custom field to the current user's document in Firestore
-const addCustomFieldToCurrentUser = async (
-  fieldName: string,
-  data: any,
-  subSection: string,
-  removeData?: boolean
-): Promise<void> => {
-  try {
-    const currentUserID = auth.currentUser?.uid;
-    if (!currentUserID) {
-      return;
-    }
-    const userRef = doc(
-      db,
-      "users",
-      currentUserID,
-      subSection,
-      `${subSection}UserRecords`
-    );
-
-    if (userRef) {
-      if (Array.isArray(data)) {
-        // If the data is an array, use the arrayUnion method to add the values to the array field.
-        await updateDoc(userRef, {
-          [fieldName]: arrayUnion(...data),
-        });
-      } else {
-        // If the data is not an array, simply update the field with the new value.
-        await updateDoc(userRef, {
-          [fieldName]: data,
-        });
-      }
-      if (Array.isArray(removeData)) {
-        // If `removeData` is an array, use the `arrayRemove` method to remove the values from the array field.
-        await updateDoc(userRef, {
-          [fieldName]: arrayRemove(...removeData),
-        });
-      } else if (removeData) {
-        // If `removeData` is not an array and is truthy, use the `arrayRemove` method to remove the value from the array field.
-        await updateDoc(userRef, {
-          [fieldName]: arrayRemove(removeData),
-        });
-      }
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// Function to get current user's data from Firestore
-const getCurrentUserData = async (
-  query: string,
-  subSection: string
-): Promise<string | null> => {
-  try {
-    const currentUserID = auth.currentUser?.uid;
-    if (!currentUserID) {
-      return null;
-    }
-    const userRef = doc(
-      db,
-      "users",
-      currentUserID,
-      subSection,
-      `${subSection}UserRecords`
-    );
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-      const userData = userDoc.get(query);
-      return userData || null;
-    } else {
-      console.error("User document not found");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error getting user data:", error);
-    return null;
-  }
-};
-
 // Function to add custom field to a user's document in Firestore using UID
 const addCustomFieldToUserByUID = async (
   uid: string,
+  subSection: string,
   fieldName: string,
   data: any,
-  subSection: string,
-  removeData?: boolean
+  removeData?: any | any[]
 ): Promise<void> => {
   try {
     const userRef = doc(
@@ -262,41 +183,74 @@ const addCustomFieldToUserByUID = async (
       `${subSection}UserRecords`
     );
 
-    if (userRef) {
-      if (Array.isArray(data)) {
-        // If the data is an array, use the arrayUnion method to add the values to the array field.
-        await updateDoc(userRef, {
-          [fieldName]: arrayUnion(...data),
-        });
-      } else {
-        // If the data is not an array, simply update the field with the new value.
-        await updateDoc(userRef, {
-          [fieldName]: data,
-        });
-      }
+    if (!userRef) {
+      console.error("User document not found");
+      return;
+    }
+
+    if (Array.isArray(data)) {
+      await addDataToArrayField(userRef, fieldName, data);
+    } else {
+      await setDataToField(userRef, fieldName, data);
+    }
+
+    if (removeData) {
       if (Array.isArray(removeData)) {
-        // If `removeData` is an array, use the `arrayRemove` method to remove the values from the array field.
-        await updateDoc(userRef, {
-          [fieldName]: arrayRemove(...removeData),
-        });
-      } else if (removeData) {
-        // If `removeData` is not an array and is truthy, use the `arrayRemove` method to remove the value from the array field.
-        await updateDoc(userRef, {
-          [fieldName]: arrayRemove(removeData),
-        });
+        await removeDataFromArrayField(userRef, fieldName, removeData);
+      } else {
+        await removeDataFromField(userRef, fieldName, removeData);
       }
     }
   } catch (err) {
-    console.error(err);
+    console.error("Error adding custom field to user:", err);
   }
 };
 
-// Function to get user data from Firestore using UID
+const addDataToArrayField = async (
+  userRef: DocumentReference,
+  fieldName: string,
+  data: any[]
+): Promise<void> => {
+  await updateDoc(userRef, {
+    [fieldName]: arrayUnion(...data),
+  });
+};
+
+const setDataToField = async (
+  userRef: DocumentReference,
+  fieldName: string,
+  data: any
+): Promise<void> => {
+  await updateDoc(userRef, {
+    [fieldName]: data,
+  });
+};
+
+const removeDataFromArrayField = async (
+  userRef: DocumentReference,
+  fieldName: string,
+  removeData: any[]
+): Promise<void> => {
+  await updateDoc(userRef, {
+    [fieldName]: arrayRemove(...removeData),
+  });
+};
+
+const removeDataFromField = async (
+  userRef: DocumentReference,
+  fieldName: string,
+  removeData: any
+): Promise<void> => {
+  await updateDoc(userRef, {
+    [fieldName]: arrayRemove(removeData),
+  });
+};
+
 const getUserDataByUID = async (
   uid: string,
-  query: string,
-  subSection: string
-): Promise<string | null> => {
+  subSection: string,
+  query: string[]
+): Promise<{ data: Record<string, any> | null; error: any }> => {
   try {
     const userRef = doc(
       db,
@@ -307,15 +261,18 @@ const getUserDataByUID = async (
     );
     const userDoc = await getDoc(userRef);
     if (userDoc.exists()) {
-      const userData = userDoc.get(query);
-      return userData || null;
+      const userData = userDoc.data();
+      const extractedData = {};
+      query.forEach((field) => {
+        extractedData[field] = userData[field];
+      });
+      return { data: extractedData, error: null };
     } else {
-      console.error("User document not found");
-      return null;
+      return { data: null, error: "User document not found" };
     }
   } catch (error) {
     console.error("Error getting user data:", error);
-    return null;
+    return { data: null, error };
   }
 };
 
@@ -327,8 +284,6 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
-  addCustomFieldToCurrentUser,
   getUserDataByUID,
-  getCurrentUserData,
   addCustomFieldToUserByUID,
 };

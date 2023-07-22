@@ -8,9 +8,17 @@ Description: This file contains the Register component, which is responsible for
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, registerWithEmailAndPassword, signInWithGoogle } from "./../../firebase.ts";
+import {
+  auth,
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from "./../../firebase.ts";
 import "./style.scss";
-import { validateEmail, validateMediumPassword, validateUsername } from "./../../Constants.ts";
+import {
+  validateEmail,
+  validateMediumPassword,
+  validateUsername,
+} from "./../../Constants.ts";
 
 function Register() {
   // State variables to hold user input
@@ -161,7 +169,12 @@ function Register() {
           {/* Google sign-in provider */}
           <div className="providers">
             <div className="provider Google" onClick={signInWithGoogle}>
-              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+              >
                 {/* Google SVG icon */}
               </svg>
               <div>Google</div>

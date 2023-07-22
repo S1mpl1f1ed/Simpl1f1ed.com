@@ -9,6 +9,8 @@ import Login from "./Components/Accounts/Login";
 import Logout from "./Components/Accounts/Logout";
 import Register from "./Components/Accounts/Register";
 import Reset from "./Components/Accounts/Reset";
+import ViewProfile from "./Components/Accounts/Profiles/ViewProfile";
+import MyProfile from "./Components/Accounts/Profiles/MyProfile";
 
 import "./index.scss";
 
@@ -40,6 +42,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/password_reset" element={<Reset />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/profile" element={<MyProfile />} />
+            <Route path="/profile/:id" element={<ViewProfile />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />
