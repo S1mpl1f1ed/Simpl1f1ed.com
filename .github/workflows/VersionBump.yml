@@ -1,0 +1,57 @@
+name: Version Bump
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  version_bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Determine version bump
+        id: version_bump
+        run: |
+          # Count the number of files changed in the last commit
+          NUM_FILES_CHANGED=$(git diff-tree --name-only --no-commit-id -r ${{ github.sha }} | wc -l)
+          
+          # Set default values for major, minor, and patch version increments
+          MAJOR_INCREMENT=0
+          MINOR_INCREMENT=0
+          PATCH_INCREMENT=0.1
+          
+          # Check the number of changed files and update version increments accordingly
+          if [ "$NUM_FILES_CHANGED" -gt 1 ]; then
+            MINOR_INCREMENT=1
+            PATCH_INCREMENT=0
+          fi
+          
+          # Update the package.json file with the new version increments
+          npm --no-git-tag-version version pre${MAJOR_INCREMENT}.${MINOR_INCREMENT}.${PATCH_INCREMENT}
+          
+          # Get the new version after bumping
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "::set-output name=new_version::${NEW_VERSION}"
+
+      - name: Commit version bump
+        if: steps.version_bump.outputs.new_version != '0.0.0'
+        run: |
+          # Commit the updated package.json
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -a -m "Bump version to ${{ steps.version_bump.outputs.new_version }}"
+          git push
+
+      - name: Show updated version
+        if: steps.version_bump.outputs.new_version != '0.0.0'
+        run: |
+          echo "Updated version: ${{ steps.version_bump.outputs.new_version }}"

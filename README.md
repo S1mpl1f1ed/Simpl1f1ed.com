@@ -1,5 +1,7 @@
 # Firebase React Website Deployment Guide
 
+Difficulty: 🟥🟥◻️◻️◻️  - Beginner (Level 2)
+
 This guide will walk you through the process of setting up and deploying a Firebase React website.
 
 ## Prerequisites
