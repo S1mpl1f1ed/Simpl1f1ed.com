@@ -1,6 +1,27 @@
 {
   "name": "reactfirebasetemplate_by_simpl1f1ed",
-  "private": true,
+  "version": "1.0.0",
+  "description": "A template for React projects with Firebase integration.",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "emulate": "npm ci && npm run build && firebase emulators:start",
+    "deploy": "npm ci && npm run build && firebase deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your_username/reactfirebasetemplate_by_simpl1f1ed.git"
+  },
+  "keywords": [
+    "react",
+    "firebase",
+    "template",
+    "boilerplate"
+  ],
+  "author": "MScheiterle/Simpl1f1ed",
+  "license": "MIT",
   "dependencies": {
     "axios": "^1.4.0",
     "firebase": "^10.0.0",
@@ -10,19 +31,9 @@
     "react-scripts": "5.0.1",
     "sass": "^1.63.6"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "emulate": "npm ci && npm run build && firebase emulators:start",
-    "deploy": "npm ci && npm run build && firebase deploy"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/react": "^18.2.15"
   },
   "browserslist": {
     "production": [
@@ -36,8 +47,10 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/react": "^18.2.15"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   }
 }
