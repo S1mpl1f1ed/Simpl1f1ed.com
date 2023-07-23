@@ -10,23 +10,31 @@ Before you begin, make sure you have the following:
 
 - [Node.js](https://nodejs.org/en) is installed on your machine.
 
-## Step 1: Clone the GitHub Repository
+## Step 1: Get the template
 
-1. Open your terminal and navigate to the desired directory where you want to clone the repository.
-2. Run the following command to clone the GitHub repository:
+Use one of the two options to use this template.
+
+1. Clone the repository
+- Open your terminal and navigate to the desired directory where you want to clone the repository.
+- Run the following command to clone the GitHub repository:
 
 ```git clone https://github.com/MScheiterle/ReactFirebaseTemplate.git```
 
+2. Copy the template
+- Open the [Template Page](https://github.com/new?template_name=ReactFirebaseTemplate&template_owner=MScheiterle)
+- Sign in if needed and name your new repository
+- Click the `Create repository` button
+
 ## Step 2: Set up a Firebase Project
 
-1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project name it and add it to your Google account.
+1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project name and add it to your Google account.
 2. When it is done provisioning resources, select the `</>` symbol to create a web app.
 3. Follow the instructions to register your app and obtain your Firebase configuration object.
-4. Ensure you get the Firebase configuration, if you dont you can get it from the `Project settings` page at the bottom in the `Your apps` section.
+4. Ensure you get the Firebase configuration, if you don't you can get it from the `Project settings` page at the bottom in the `Your apps` section.
 
 ## Step 3: Configure Firebase in your React App
 
-1. Create a file in the main project directory named ```.env.local```. This will prevent sensative project information from being uploaded to github.
+1. Create a file in the main project directory named ```.env.local```. This will prevent sensitive project information from being uploaded to GitHub.
 2. Paste each token of the Firebase configuration using the following format
 
 ```
@@ -48,10 +56,10 @@ REACT_APP_FIREBASE_MEASURE_ID = YOUR_MEASURE_ID
 - Select the Firebase features you want to set up.
 - Choose your Firebase project from the list.
 - Specify your build directory as build.
-- Configure as a single-page if you only want one page.
+- Configure as a single page if you only want one page.
 - Overwrite index.html: No.
 
-2. Replace all code within the `firebase.json` file with the following code if its not already done:
+2. Replace all code within the `firebase.json` file with the following code if it's not already done:
 
 ```
 {
@@ -77,7 +85,7 @@ REACT_APP_FIREBASE_MEASURE_ID = YOUR_MEASURE_ID
 }
 ```
 
-In the event that you are adding another web app to a project that already has one, you will ne to specifiy the webapp name in the above code. It should look something like this:
+In the event that you are adding another web app to a project that already has one, you will need to specify the web app name in the above code. It should look something like this:
 
 ```
 "hosting": {
@@ -99,13 +107,13 @@ Use one of the below options to deploy the React App to your Firebase project
 
 - Deploy your app to Firebase Hosting with the following command:
 
-Although I prefer to use the Github option I added this one for all those who dont prefer Github, I am **NOT** certain if `.env.local` enviorment varibles will be transfered to the Firebase machine so if your `firebase.ts` file isnt working or you get an error in console saying it doesnt have an API_KEY that may be why.
+Although I prefer to use the Github option I added this one for all those who don't prefer Github, I am **NOT** certain if `.env.local` environment variables will be transferred to the Firebase machine so if your `firebase.ts` file isn't working or you get an error in console saying it doesn't have an API_KEY that may be why.
 
 ```npm run deploy```
 
-- Push to Github
+- Push to GitHub
 
-This will only work if you added github workflows to the React App when you ran the Firebase init command
+This will only work if you added GitHub workflows to the React App when you ran the Firebase init command
 
 Within the workflow files `firebase-hosting-merge.yml` and `firebase-hosting-pull-request.yml` add the following above the jobs section:
 
@@ -120,9 +128,9 @@ env:
   REACT_APP_FIREBASE_STORAGE_BUCKET: ${{secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
 ```
 
-Finally inside of your github project you must add the enviorment secrects
+Finally, inside your GitHub project, you must add the environment secrets
 
-1. Go to your Github account and naviagte to your projects repository
+1. Go to your Github account and navigate to the repository of your project
 
 2. Find `Settings` then `Secrets and variables`
 
@@ -144,9 +152,9 @@ Finally inside of your github project you must add the enviorment secrects
 
 ## Conclusion and Disclaimer
 
-- Just so its out there, when I say something like `YOUR_API_KEY`, I mean you should change that to your Firebase API_KEY given to you in the Firebase project config.
+- Just so it's out there when I say something like `YOUR_API_KEY`, I mean you should change that to your Firebase API_KEY given to you in the Firebase project config.
 
-- The `firebase.json` file assumes you have setup your **Firestore Rules** correctly so that it can access the necessary docuemnts follow the example for public and private records.
+- The `firebase.json` file assumes you have set up your **Firestore Rules** correctly so that it can access the necessary documents following the example for public and private records.
 
 ```
 service cloud.firestore {
@@ -202,9 +210,9 @@ service cloud.firestore {
 | | | |        IP        | | | |  <- Field
 | | | |      Birthday    | | | |  <- Field
 | | | +------------------+ | | |
-| |                          | |
+| | +----------------------+ | |
 | +--------------------------+ |
 +------------------------------+
 ```
 
-- Any questions can be directed to Simpl1f1ed on discord or to the issues area in Github.
+- Any questions can be directed to Simpl1f1ed on Discord or to the issues area in Github.
