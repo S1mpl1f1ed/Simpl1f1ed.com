@@ -25,6 +25,11 @@ Use one of the two options to use this template.
 - Sign in if needed and name your new repository
 - Click the `Create repository` button
 
+3. Fork the repository
+- Open the [Project Repo](https://github.com/MScheiterle/ReactFirebaseTemplate)
+- Sign in if needed and name your new repository
+- Click `Create fork`
+
 ## Step 2: Set up a Firebase Project
 
 1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project name and add it to your Google account.
