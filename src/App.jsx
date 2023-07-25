@@ -35,18 +35,10 @@ function App() {
         <div>Loading...</div>
       ) : (
         <Router>
-          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/password_reset" element={<Reset />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/profile" element={<MyProfile />} />
-            <Route path="/profile/:id" element={<ViewProfile />} />
-            <Route path="*" element={<NoPage />} />
+            <Route path="*" element={<Home />} />
           </Routes>
-          <Footer />
         </Router>
       )}
     </>
