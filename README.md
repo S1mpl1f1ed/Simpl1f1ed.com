@@ -133,6 +133,8 @@ env:
   REACT_APP_FIREBASE_STORAGE_BUCKET: ${{secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
 ```
 
+Then change the given command `- run: npm ci && npm run build` to `- run: npm i && npm run build`
+
 Finally, inside your GitHub project, you must add the environment secrets
 
 1. Go to your Github account and navigate to the repository of your project
